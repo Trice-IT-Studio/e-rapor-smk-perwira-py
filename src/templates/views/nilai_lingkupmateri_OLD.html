@@ -1,0 +1,191 @@
+{% extends 'views/base_dashboard.html' %} {% block pgtitle %} Input Nilai
+Lingkup Materi {% endblock %} {% block breadcrumbs %}
+<!-- BREADCRUMBS -->
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#"><i class="fa-solid fa-chart-line"></i></a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">input nilai</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih kelas</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih mapel</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih siswa</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">lingkup materi</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<!-- BREADCRUMBS END -->
+{% endblock %} {% block dcontent %}
+<div
+  class="relative flex flex-col w-full h-fit text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+>
+  <div
+    class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border"
+  >
+    <div>
+      <h5
+        class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900"
+      >
+        Mata Pelajaran: {{mapel.name}}
+      </h5>
+    </div>
+    <div class="pt-5 flex flex-row w-full">
+      <div class="w-max pr-8">
+        <p>Tahun Ajaran</p>
+        <p>Semester</p>
+        <br />
+        <p>Nama Lengkap</p>
+        <p>NIS</p>
+        <p>NISN</p>
+        <p>Kelas</p>
+      </div>
+
+      <div>
+        <p>: {{th_obj.value}}</p>
+        <p>: {{sm_obj.value}}</p>
+        <br />
+        <p>: {{siswa.full_name}}</p>
+        <p>: {{siswa.nis}}</p>
+        <p>: {{siswa.nisn}}</p>
+        <p>: {{siswa.tingkat}}-{{siswa.kelas}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-5">
+    <form
+      action="{{ url_for('views.handle_lingkupmateri', th=th, sm=sm, siswa_id=siswa.id, mapel_id=mapel.id) }}"
+      method="post"
+    >
+      <div class="pb-6 px-0 overflow-scroll">
+        <table class="w-full mt-4 text-left table-auto min-w-max">
+          <thead>
+            <tr>
+              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                <p
+                  class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                >
+                  CAPAIAN KOMPETENSI
+                </p>
+              </th>
+              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                <p
+                  class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                >
+                  KOMPETENSI DASAR
+                </p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ck in mapel.capaian_kompetensi %}
+            <tr>
+              <td class="p-4">
+                <div class="flex items-center gap-3">
+                  <div class="flex flex-col">
+                    <p
+                      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                    >
+                      {{ck.desc}}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="p-4">
+                {% for kd in ck.kompetensi_dasar %}
+                <hr />
+                <div class="py-1 w-full flex flex-row">
+                  <input
+                    type="text"
+                    class="hidden"
+                    name="kd-id{{kd.id}}"
+                    value="{{kd.id}}"
+                  />
+                  <div class="w-full">{{kd.desc}}</div>
+                  <div class="w-full min-w-[200px]">
+                    {% if kd.nilai %}
+                    <input
+                      type="text"
+                      class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                      placeholder="Nilai"
+                      name="nilai-kd{{kd.id}}"
+                      value="{{kd.nilai.value}}"
+                    />
+                    {% else %}
+                    <input
+                      type="text"
+                      class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                      placeholder="Nilai"
+                      name="nilai-kd{{kd.id}}"
+                    />
+                    {% endif %}
+                  </div>
+                </div>
+                <hr />
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="px-5 w-full flex flex-row justify-end">
+        <button
+          data-dialog-close="true"
+          class="w-fit rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+          type="submit"
+        >
+          Simpan
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div
+    class="flex items-center justify-between p-4 border-t border-blue-gray-50"
+  >
+    <a
+      href="{{ url_for('views.nilai_start3', kelas_id=siswa.kelas_id, mapel_id=mapel.id) }}"
+    >
+      <button
+        class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+      >
+        <i class="mr-1 fa-solid fa-arrow-left"></i>
+        Kembali
+      </button></a
+    >
+    <p
+      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+    ></p>
+    <div class="flex gap-2">
+      <button class="bg-transparent" type="button"></button>
+      <button class="bg-transparent" type="button"></button>
+    </div>
+  </div>
+</div>
+{% endblock %}

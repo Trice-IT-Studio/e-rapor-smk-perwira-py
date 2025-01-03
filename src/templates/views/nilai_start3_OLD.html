@@ -1,0 +1,302 @@
+{% extends 'views/base_dashboard.html' %} {% block pgtitle %} Input Nilai {%
+endblock %} {% block breadcrumbs %}
+<!-- BREADCRUMBS -->
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#"><i class="fa-solid fa-chart-line"></i></a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">input nilai</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih kelas</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih mapel</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih siswa</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<!-- BREADCRUMBS END -->
+{% endblock %} {% block dcontent %}
+<div
+  class="relative flex flex-col w-full h-fit text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+>
+  <form action="{{ url_for('views.handle_nilai_start') }}" method="post">
+    <div
+      class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border"
+    >
+      <div>
+        <h5
+          class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900"
+        >
+          Pilih siswa yang ingin dinilai
+        </h5>
+      </div>
+    </div>
+
+    <div
+      class="px-5 flex flex-col items-center justify-between gap-4 md:flex-row"
+    >
+      <div class="block w-full overflow-hidden md:w-max">
+        <nav>
+          <ul role="tablist" class="relative flex flex-row">
+            <li
+              role="tab"
+              class="relative flex items-center justify-center w-full h-full px-2 py-1 font-sans text-base antialiased font-normal leading-relaxed text-center bg-transparent cursor-pointer select-none text-blue-gray-900"
+              data-value="all"
+            >
+              <div class="my-5 w-full min-w-[200px]">
+                <div class="relative">
+                  <select
+                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                    name="tipe-select"
+                    required
+                  >
+                    <option value="" disabled selected>
+                      --- TIPE PENILAIAN ---
+                    </option>
+                    <option value="1">Lingkup Materi</option>
+                    <option value="2">Sumatif Tengah</option>
+                    <option value="3">Sumatif Akhir</option>
+                  </select>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.2"
+                    stroke="currentColor"
+                    class="h-5 w-5 ml-1 absolute top-2.5 right-2.5 text-slate-700"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </li>
+            <li
+              role="tab"
+              class="relative flex items-center justify-center w-full h-full px-2 py-1 font-sans text-base antialiased font-normal leading-relaxed text-center bg-transparent cursor-pointer select-none text-blue-gray-900"
+              data-value="all"
+            >
+              <div class="my-5 w-full min-w-[200px]">
+                <div class="relative">
+                  <select
+                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                    name="th-select"
+                    required
+                  >
+                    <option value="{{current_th.id}}" selected>
+                      {{current_th.value}}
+                    </option>
+                    {% for th in all_th %} {% if th.id != current_th.id %}
+                    <option value="{{th.id}}" selected>{{th.value}}</option>
+                    {% endif %} {% endfor %}
+                  </select>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.2"
+                    stroke="currentColor"
+                    class="h-5 w-5 ml-1 absolute top-2.5 right-2.5 text-slate-700"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </li>
+            <li
+              role="tab"
+              class="relative flex items-center justify-center w-full h-full px-2 py-1 font-sans text-base antialiased font-normal leading-relaxed text-center bg-transparent cursor-pointer select-none text-blue-gray-900"
+              data-value="all"
+            >
+              <div class="my-5 w-full min-w-[200px]">
+                <div class="relative">
+                  <select
+                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                    name="sm-select"
+                    required
+                  >
+                    <option value="{{current_sm.id}}" selected>
+                      {{current_sm.value}}
+                    </option>
+                    {% for sm in all_sm %} {% if sm.id != current_sm.id %}
+                    <option value="{{sm.id}}">{{sm.value}}</option>
+                    {% endif %} {% endfor %}
+                  </select>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.2"
+                    stroke="currentColor"
+                    class="h-5 w-5 ml-1 absolute top-2.5 right-2.5 text-slate-700"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="w-full md:w-72">
+        <div class="relative h-10 w-full min-w-[200px]">
+          <div
+            class="absolute grid w-5 h-5 top-2/4 right-3 -translate-y-2/4 place-items-center text-blue-gray-500"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              ></path>
+            </svg>
+          </div>
+          <input
+            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+            placeholder=" "
+          />
+          <label
+            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
+          >
+            Search
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-5">
+      <div class="pb-6 px-0 overflow-scroll">
+        <table class="w-full mt-4 text-left table-auto min-w-max">
+          <thead>
+            <tr>
+              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                <p
+                  class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                >
+                  NAMA
+                </p>
+              </th>
+              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                <p
+                  class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                >
+                  NIS/NISN
+                </p>
+              </th>
+              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                <p
+                  class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                ></p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for siswa in siswa_perkelas %}
+            <tr>
+              <td class="p-4">
+                <div class="flex items-center gap-3">
+                  <div class="flex flex-col">
+                    <p
+                      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                    >
+                      {{siswa.full_name}}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="p-4">
+                <div class="flex flex-col">
+                  <p
+                    class="text-center block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                  >
+                    {{siswa.nis}}/{{siswa.nisn}}
+                  </p>
+                </div>
+              </td>
+              <td class="text-right p-4">
+                <!-- siswa id indicator -->
+                <input
+                  type="text"
+                  class="hidden"
+                  name="siswa-id"
+                  value="{{siswa.id}}"
+                />
+                <input
+                  type="text"
+                  class="hidden"
+                  name="mapel-id"
+                  value="{{mapel_id}}"
+                />
+                <button
+                  class="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                  type="submit"
+                >
+                  Isi nilai
+                  <i class="pl-1 fa-solid fa-arrow-right"></i>
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+  <div
+    class="flex items-center justify-between p-4 border-t border-blue-gray-50"
+  >
+    <a href="{{ url_for('views.nilai_start2', kelas_id=kelas.id) }}">
+      <button
+        class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+      >
+        <i class="mr-1 fa-solid fa-arrow-left"></i>
+        Kembali
+      </button></a
+    >
+    <p
+      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+    ></p>
+    <div class="flex gap-2">
+      <button class="bg-transparent" type="button"></button>
+      <button class="bg-transparent" type="button"></button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,321 @@
+{% extends 'base.html' %} {% block title %} {% endblock %} {% block content %}
+<main class="w-full h-full flex flex-row">
+  <!-- Sidebar start -->
+  <div class="w-fit h-full shadow-lg">
+    <div
+      class="sticky top-0 overflow-y-auto flex w-full h-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700"
+    >
+      <div class="p-4 mb-2">
+        <h5
+          class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900"
+        >
+          E-Rapor SMK
+        </h5>
+      </div>
+      <nav
+        class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700"
+      >
+        <a href="{{ url_for('views.beranda') }}">
+          <div
+            role="button"
+            class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+          >
+            <div class="grid mr-4 place-items-center">
+              <i class="fa-solid fa-house"></i>
+            </div>
+            Beranda
+            <!-- <div
+                class="grid ml-auto place-items-center justify-self-end"
+            >
+                <div
+                    class="relative grid items-center px-2 py-1 font-sans text-xs font-bold uppercase rounded-full select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900"
+                >
+                    <span class="">14</span>
+                </div>
+            </div> -->
+          </div>
+        </a>
+        <div class="relative block w-full">
+          <div
+            role="button"
+            class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none text-start text-blue-gray-700 hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+          >
+            <button
+              data-collapse-target="data-sub-nav"
+              type="button"
+              class="flex items-center justify-between w-full p-3 font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-900 hover:text-blue-gray-900"
+            >
+              <div class="grid mr-4 place-items-center">
+                <i class="fa-solid fa-list"></i>
+              </div>
+              <p
+                class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900"
+              >
+                Data
+              </p>
+              <span class="ml-4">
+                <i class="fa-solid fa-angle-up"></i>
+              </span>
+            </button>
+          </div>
+          <div
+            data-collapse="data-sub-nav"
+            class="pl-5 h-0 overflow-hidden transition-all duration-300 ease-in-out"
+          >
+            <div
+              class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700"
+            >
+              <nav
+                class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700"
+              >
+                <a href="{{ url_for('views.data_siswa') }}">
+                  <div
+                    role="button"
+                    class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                  >
+                    <div class="grid mr-4 place-items-center">
+                      <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                    Data Siswa
+                  </div>
+                </a>
+                <a href="{{ url_for('views.data_kelas') }}">
+                  <div
+                    role="button"
+                    class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                  >
+                    <div class="grid mr-4 place-items-center">
+                      <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                    Data Kelas
+                  </div>
+                </a>
+                <a href="{{ url_for('views.data_kelompok_mapel') }}">
+                  <div
+                    role="button"
+                    class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                  >
+                    <div class="grid mr-4 place-items-center">
+                      <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                    Data Kelompok Mapel
+                  </div>
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="relative block w-full">
+          <div
+            role="button"
+            class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+          >
+            <button
+              data-collapse-target="nilai-sub-nav"
+              type="button"
+              class="bg-white flex items-center justify-between w-full p-3 font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-700 hover:text-blue-gray-900"
+            >
+              <div class="grid mr-4 place-items-center">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <p
+                class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900"
+              >
+                Nilai
+              </p>
+              <span class="ml-4">
+                <i class="fa-solid fa-angle-up"></i>
+              </span>
+            </button>
+          </div>
+          <div
+            data-collapse="nilai-sub-nav"
+            class="pl-5 h-0 overflow-hidden transition-all duration-300 ease-in-out"
+          >
+            <div
+              class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700"
+            >
+              <nav
+                class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700"
+              >
+                <a href="{{ url_for('views.bobot_penilaian') }}">
+                  <div
+                    role="button"
+                    class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                  >
+                    <div class="grid mr-4 place-items-center">
+                      <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                    Bobot Penilaian
+                  </div>
+                </a>
+                <a href="{{ url_for('views.nilai_start1') }}">
+                  <div
+                    role="button"
+                    class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                  >
+                    <div class="grid mr-4 place-items-center">
+                      <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                    Input Nilai
+                  </div>
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="relative block w-full">
+          <hr class="bg-white my-2 border-blue-gray-50" />
+          <a href="{{ url_for('views.profile') }}">
+            <div
+              role="button"
+              class="bg-white flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+            >
+              <div class="grid mr-4 place-items-center">
+                <i class="fa-solid fa-circle-user"></i>
+              </div>
+              Profile
+            </div>
+          </a>
+          <a href="{{ url_for('views.pengaturan') }}">
+            <div
+              role="button"
+              class="bg-white flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+            >
+              <div class="grid mr-4 place-items-center">
+                <i class="fa-solid fa-gear"></i>
+              </div>
+              Pengaturan
+            </div>
+          </a>
+          <form action="{{ url_for('auth.logout') }}" method="get">
+            <button
+              role="button"
+              type="submit"
+              class="bg-white flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+            >
+              <div class="grid mr-4 place-items-center">
+                <i class="fa-solid fa-power-off"></i>
+              </div>
+              Log Out
+            </button>
+          </form>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <!-- Sidebar end -->
+
+  <!-- MAIN CONTAINER -->
+  <div class="w-full h-full flex flex-col bg-gray-100">
+    <!-- TOP NAV -->
+    <nav
+      class="shadow block w-full pb-2 bg-white sticky top-0 lg:px-5 lg:pb-6 pt-6"
+    >
+      <div
+        class="container flex flex-wrap items-center justify-between text-slate-800"
+      >
+        <h1
+          class="font-bold leading-snug tracking-tight text-2xl text-gray-700"
+        >
+          SMK Perwira Jakarta | {{ current_th.value }} {{ current_sm.value }}
+        </h1>
+
+        <button
+          class="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
+          type="button"
+        >
+          <span
+            class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category =='error'
+    %}
+    <div
+      role="alert"
+      class="mb-4 relative flex w-full p-3 text-sm text-white bg-red-600 rounded-md ease-in-out"
+      data-dismissible="error"
+    >
+      {{message}}
+      <button
+        class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5 ease-in-out"
+        type="button"
+        data-dismissible-target="error"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    {% elif category == 'warning' %}
+    <div
+      role="alert"
+      class="mb-4 relative flex w-full p-3 text-sm text-white bg-yellow-600 rounded-md ease-in-out"
+      data-dismissible="warning"
+    >
+      {{message}}
+      <button
+        class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5 ease-in-out"
+        type="button"
+        data-dismissible-target="warning"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    {% else %}
+    <div
+      role="alert"
+      class="mb-4 relative flex w-full p-3 text-sm text-white bg-green-600 rounded-md ease-in-out"
+      data-dismissible="success"
+    >
+      {{message}}
+      <button
+        class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5 ease-in-out"
+        type="button"
+        data-dismissible-target="success"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <!-- CONTENT -->
+    <div class="w-full h-full p-6 bg-gray-200 shadow-inner overflow-y-auto">
+      <div class="w-full pb-5">
+        <!-- TITLE -->
+        <h1 class="font-bold leading-snug tracking-tight text-2xl">
+          {% block pgtitle %} {% endblock %}
+        </h1>
+
+        <!-- BREADCRUMBS -->
+        <nav aria-label="breadcrumb" class="w-full">
+          <ol
+            class="mt-5 flex w-full flex-wrap items-center rounded-md bg-slate-50 px-4 py-2 shadow-md"
+          >
+            {% block breadcrumbs %} {% endblock %}
+          </ol>
+        </nav>
+      </div>
+
+      {% block dcontent %} {% endblock %}
+    </div>
+  </div>
+</main>
+{% endblock %}

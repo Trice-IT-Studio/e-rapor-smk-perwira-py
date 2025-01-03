@@ -1,0 +1,106 @@
+{% extends 'base.html' %} {% block title %} - Login {% endblock %} {% block
+content %}
+<main class="w-5/5 h-full flex flex-row items-center justify-center">
+  <div class="w-full h-full flex flex-col items-center justify-center">
+    <img src="{{ url_for('static', filename='img/erapor.png') }}" alt="death" />
+  </div>
+
+  <div class="w-2/5 h-full flex flex-col items-end justify-center pr-20">
+    <div class="relative flex flex-col rounded-xl bg-transparent">
+      <h1
+        class="font-bold leading-snug tracking-tight bg-gradient-to-tr from-slate-800 to-slate-500 bg-clip-text text-transparent mx-auto w-full text-2xl lg:max-w-3xl lg:text-5xl"
+      >
+        E-Rapor SMK Perwira
+      </h1>
+
+      <!-- LOGIN FORM -->
+      <form
+        action="{{url_for('auth.handle_login')}}"
+        method="post"
+        class="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+      >
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category
+        =='error' %}
+        <div
+          role="alert"
+          class="mb-4 relative flex w-full p-3 text-sm text-white bg-red-600 rounded-md ease-in-out"
+          data-dismissible="error"
+        >
+          {{message}}
+          <button
+            class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5 ease-in-out"
+            type="button"
+            data-dismissible-target="error"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        {% elif category == 'warning' %}
+        <div
+          role="alert"
+          class="mb-4 relative flex w-full p-3 text-sm text-white bg-yellow-600 rounded-md ease-in-out"
+          data-dismissible="warning"
+        >
+          {{message}}
+          <button
+            class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5 ease-in-out"
+            type="button"
+            data-dismissible-target="warning"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        {% else %}
+        <div
+          role="alert"
+          class="mb-4 relative flex w-full p-3 text-sm text-white bg-green-600 rounded-md ease-in-out"
+          data-dismissible="success"
+        >
+          {{message}}
+          <button
+            class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5 ease-in-out"
+            type="button"
+            data-dismissible-target="success"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        {% endif %} {% endfor %} {% endif %} {% endwith %}
+        <!-- END OF FLASH MESSAGES -->
+
+        <div class="mb-1 flex flex-col gap-6">
+          <div class="w-full max-w-sm min-w-[200px]">
+            <label class="block mb-2 text-sm text-slate-600"> Username </label>
+            <input
+              type="text"
+              class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+              placeholder="Username"
+              name="username"
+              id="username"
+            />
+          </div>
+          <div class="w-full max-w-sm min-w-[200px]">
+            <label class="block mb-2 text-sm text-slate-600"> Password </label>
+            <input
+              type="password"
+              class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+              placeholder="Your Password"
+              name="password"
+              id="password"
+            />
+          </div>
+        </div>
+
+        <button
+          class="mt-4 w-full rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="submit"
+        >
+          Masuk
+        </button>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock%}

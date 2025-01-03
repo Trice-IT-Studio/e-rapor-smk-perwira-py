@@ -1,0 +1,440 @@
+{% extends 'views/base_dashboard.html' %} {% block pgtitle %} Input Nilai Tengah
+Semester {% endblock %} {% block breadcrumbs %}
+<!-- BREADCRUMBS -->
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#"><i class="fa-solid fa-chart-line"></i></a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">input nilai</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih kelas</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih mapel</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih siswa</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">nilai sumatif tengah semester</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<!-- BREADCRUMBS END -->
+{% endblock %} {% block dcontent %}
+<div
+  class="relative flex flex-col w-full h-fit text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+>
+  <!-- top desc start -->
+  <div
+    class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border"
+  >
+    <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+      <div class="block w-full overflow-hidden md:w-max">
+        <nav>
+          <b>Rumus Nilai:</b> <br />
+          <b>Rata-rata Formatif =</b> ((KD1 + KD2 + KD3 + ...) / Jumlah KD) x
+          Bobot Lingkup Materi <br />
+          <b>Nilai ATS = </b>Nilai Asesment Tengah Semester x Bobot Tengah
+          <br />
+          <b>Nilai Sumatif Tengah Semester = </b>Rata-rata Formatif + Nilai ATS
+        </nav>
+      </div>
+      <div class="w-full md:w-72">
+        <div class="relative h-10 w-full min-w-[200px]"></div>
+      </div>
+    </div>
+  </div>
+  <!-- top desc end -->
+
+  <div class="p-5">
+    <div class="pb-6 px-0 overflow-scroll">
+      <table class="w-full mt-4 text-left table-auto min-w-max">
+        <thead>
+          <tr>
+            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <p
+                class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+              >
+                NO
+              </p>
+            </th>
+            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <p
+                class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+              >
+                NAMA SISWA
+              </p>
+            </th>
+            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <p
+                class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+              >
+                NILAI AKHIR TENGAH SEMESTER
+              </p>
+            </th>
+            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <p
+                class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+              >
+                AKSI
+              </p>
+            </th>
+          </tr>
+        </thead>
+        {% for siswa in kelas.anggota_kelas %}
+        <tbody>
+          <tr>
+            <td class="p-4">
+              <div class="w-max">{{loop.index}}</div>
+            </td>
+            <td class="p-4">
+              <div class="w-max">{{siswa.full_name}}</div>
+            </td>
+            <td class="p-4 w-fit" style="width: 20rem !important">
+              {% if siswa.nilai_tengah %} {% for nats in siswa.nilai_tengah %}
+              {% if nats.value and nats.mapel_id == mapel.id and nats.th_id ==
+              th and nats.sm_id == sm %}
+              <input
+                type="text"
+                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                placeholder="Nilai Akhir Tengah Semester"
+                value="{{nats.value}}"
+                disabled
+              />
+              {% endif %} {% if not nats.value and nats.mapel_id == mapel.id and
+              nats.th_id == th and nats.sm_id == sm %}
+              <input
+                type="text"
+                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                placeholder="Nilai Akhir Tengah Semester"
+                disabled
+              />
+              {% endif %} {% endfor %} {% endif %} {% if not
+              siswa.nilai_tengah%}
+              <input
+                type="text"
+                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                placeholder="Nilai Akhir Tengah Semester"
+                disabled
+              />
+              {% endif %}
+            </td>
+            <td class="p-4 w-full flex flex-row justify-center">
+              <div class="text-center min-w-[200px] w-fit">
+                <!-- INPUT NILAI TENGAH SISWA MODAL BUTTON -->
+                <div class="text-center relative">
+                  <button
+                    data-dialog-target="input-nt-{{siswa.id}}"
+                    class="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                    type="submit"
+                  >
+                    Masukan Nilai
+                    <i class="pl-3 fa-solid fa-plus"></i>
+                  </button>
+                </div>
+
+                <!-- INPUT NILAI TENGAH SISWA MODAL START -->
+                <div
+                  data-dialog-backdrop="input-nt-{{siswa.id}}"
+                  data-dialog-backdrop-close="true"
+                  class="pointer-events-none fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-0 backdrop-blur-sm transition-opacity duration-300"
+                >
+                  <div
+                    data-dialog="input-nt-{{siswa.id}}"
+                    class="relative m-4 p-4 w-4/5 rounded-lg bg-white shadow-sm overflow-scroll"
+                  >
+                    <div
+                      class="pl-5 flex shrink-0 items-center pb-4 text-xl font-medium text-slate-800"
+                    >
+                      <b>Input Nilai Tengah Semester {{siswa.full_name}}</b>
+                    </div>
+                    <div>
+                      <p class="p-5 text-sm text-left">
+                        <b>rumus nilai:</b> <br />
+                        Rata-rata KD = ((KD1 + KD2 + KD3 + ...) / Jumlah KD) x
+                        Bobot Sumatif Lingkup Materi <br />
+                        Nilai ATS = Nilai Asesment Tengah Semester x Bobot
+                        Sumatif Tengah Semester <br />
+                        <br />
+                        Nilai Sumatif Tengah Semester = Rata-rata KD + Nilai ATS
+                      </p>
+                    </div>
+                    <hr />
+                    <div class="p-5">
+                      <!-- INPUT NILAI TENGAH SISWA MODAL FORM -->
+                      <form
+                        action="{{ url_for('views.handle_nilai_tengah') }}"
+                        method="post"
+                      >
+                        <div
+                          class="pb-6 px-0 overflow-scroll"
+                          style="max-height: 60vh !important"
+                        >
+                          <table
+                            class="mt-4 text-left table-auto"
+                            style="width: 75vw !important"
+                          >
+                            <thead>
+                              <tr>
+                                <th
+                                  class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+                                >
+                                  <p
+                                    class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                                  >
+                                    NILAI ASESMEN
+                                  </p>
+                                </th>
+                                <th
+                                  class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+                                >
+                                  <p
+                                    class="text-center font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                                  >
+                                    CAPAIAN KOMPETENSI & NILAI PER KD
+                                  </p>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="p-4">
+                                  <div class="text-center p-4 w-full">
+                                    {% if siswa.nilai_sumatif_tengah %} {% for
+                                    nats in siswa.nilai_sumatif_tengah %} {% if
+                                    nats.value and nats.mapel_id == mapel.id and
+                                    nats.th_id == th and nats.sm_id == sm %}
+                                    <input
+                                      type="text"
+                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                      placeholder="Nilai Asesmen Tengah"
+                                      name="nat-{{siswa.id}}"
+                                      value="{{nats.nat_value}}"
+                                    />
+                                    {% endif %} {% if not nats.value and
+                                    nats.mapel_id == mapel.id and nats.th_id ==
+                                    th and nats.sm_id == sm %}
+                                    <input
+                                      type="text"
+                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                      placeholder="Nilai Asesmen Tengah"
+                                      name="nat-{{siswa.id}}"
+                                    />
+                                    {% endif %} {% endfor %} {% endif %} {% if
+                                    not siswa.nilai_sumatif_tengah %}
+                                    <input
+                                      type="text"
+                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                      placeholder="Nilai Asesmen Tengah"
+                                      name="nat-{{siswa.id}}"
+                                    />
+                                    {% endif %}
+                                  </div>
+                                </td>
+                                {% for ck in lingkup_ck %}
+                                <td class="p-5 flex flex-row">
+                                  <div
+                                    class="p-4 flex flex-row items-center"
+                                    style="width: 50% !important"
+                                  >
+                                    <p
+                                      class="flex flex-row items-center justify-center block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                                    >
+                                      <b>{{ck.desc}}</b>
+                                    </p>
+                                  </div>
+                                  <div class="flex flex-col w-full h-full">
+                                    {% for kd in lingkup_kd %}
+                                    <div
+                                      class="flex flex-row items-center h-full"
+                                    >
+                                      <div class="w-full">
+                                        <label
+                                          class="text-center block mb-2 text-sm text-slate-600"
+                                        >
+                                          {{kd.desc}}
+                                        </label>
+                                      </div>
+                                      <div class="p-2 w-full">
+                                        <!-- if kd.nilai -->
+                                        {% if kd.nilai %} {% for nlk in kd.nilai
+                                        %} {% if nlk.tipe_nilai == 'p' %} {% if
+                                        nlk.value and nlk.siswa_id == siswa.id
+                                        %}
+                                        <input
+                                          type="number"
+                                          class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                          placeholder="Nilai Pengetahuan Kosong"
+                                          disabled
+                                          name="nlk-{{kd.id}}-siswa-{{siswa.id}}-p"
+                                          value="{{nlk.value}}"
+                                        />
+                                        {% elif not nlk.value and nlk.siswa_id
+                                        == siswa.id %}
+                                        <input
+                                          type="number"
+                                          class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                          placeholder="Nilai Pengetahuan Kosong"
+                                          disabled
+                                          name="nlk-{{kd.id}}-siswa-{{siswa.id}}-p"
+                                        />
+                                        {% endif %} {% endif %} {% if
+                                        nlk.tipe_nilai == 'k' %} {% if nlk.value
+                                        and nlk.siswa_id == siswa.id %}
+                                        <input
+                                          type="number"
+                                          class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                          placeholder="Nilai Keterampilan Kosong"
+                                          disabled
+                                          name="nlk-{{kd.id}}-siswa-{{siswa.id}}-k"
+                                          value="{{nlk.value}}"
+                                        />
+                                        {% elif not nlk.value and nlk.siswa_id
+                                        == siswa.id %}
+                                        <input
+                                          type="number"
+                                          class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                          placeholder="Nilai Keterampilan Kosong"
+                                          disabled
+                                          name="nlk-{{kd.id}}-siswa-{{siswa.id}}-k"
+                                        />
+                                        {% endif %} {% endif %} {% endfor %} {%
+                                        endif %}
+
+                                        <!-- if not kd.nilai -->
+                                        {% if not kd.nilai or not
+                                        siswa.nilai_lingkup_materi %}
+                                        <input
+                                          type="number"
+                                          class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                          placeholder="Nilai Pengetahuan Kosong"
+                                          disabled
+                                          name="nlk-{{kd.id}}-siswa-{{siswa.id}}-p"
+                                        />
+                                        <input
+                                          type="number"
+                                          class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                          placeholder="Nilai Keterampilan Kosong"
+                                          disabled
+                                          name="nlk-{{kd.id}}-siswa-{{siswa.id}}-k"
+                                        />
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                    {% endfor %}
+                                  </div>
+                                </td>
+                                {% endfor %}
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- extra hidden form -->
+                        <input
+                          type="number"
+                          class="hidden"
+                          name="th"
+                          value="{{th_obj.id}}"
+                        />
+                        <input
+                          type="number"
+                          class="hidden"
+                          name="sm"
+                          value="{{sm_obj.id}}"
+                        />
+                        <input
+                          type="number"
+                          class="hidden"
+                          name="mapel-id"
+                          value="{{mapel.id}}"
+                        />
+                        <input
+                          type="number"
+                          class="hidden"
+                          name="kelas-id"
+                          value="{{kelas.id}}"
+                        />
+                        <input
+                          type="number"
+                          class="hidden"
+                          name="tipe"
+                          value="{{tipe}}"
+                        />
+                        <!-- extra hidden form end -->
+
+                        <div
+                          class="flex shrink-0 flex-wrap items-center pt-4 justify-end"
+                        >
+                          <button
+                            data-dialog-close="true"
+                            class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="button"
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            data-dialog-close="true"
+                            class="rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                            type="submit"
+                          >
+                            Simpan
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- INPUT NILAI TENGAH SISWA MODAL END -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+  <div
+    class="flex items-center justify-between p-4 border-t border-blue-gray-50"
+  >
+    <a
+      href="{{ url_for('views.nilai_start3', mapel_id=mapel.id, kelas_id=kelas.id, tipe=tipe) }}"
+    >
+      <button
+        class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+      >
+        <i class="mr-1 fa-solid fa-arrow-left"></i>
+        Kembali
+      </button></a
+    >
+    <p
+      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+    ></p>
+    <div class="flex gap-2">
+      <button class="bg-transparent" type="button"></button>
+      <button class="bg-transparent" type="button"></button>
+    </div>
+  </div>
+</div>
+{% endblock %}

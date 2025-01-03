@@ -1,0 +1,159 @@
+{% extends 'views/base_dashboard.html' %} {% block pgtitle %} Profile {%
+endblock %} {% block breadcrumbs %}
+<!-- BREADCRUMBS -->
+<li
+    class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+    <a href="#"><i class="fa-solid fa-circle-user"></i></a>
+    <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+    class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+    <a href="#">Profile</a>
+    <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<!-- BREADCRUMBS END -->
+{% endblock %} {% block dcontent %}
+<div
+    class="mb-5 p-5 relative flex flex-col w-full h-fit text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+>
+    <!-- CHANGE USERNAME FORM -->
+    <div class="w-full relative flex flex-col rounded-xl bg-transparent">
+        <p class="text-slate-500 font-light">Ubah username</p>
+        <form
+            action="{{ url_for('views.handle_profile') }}"
+            method="post"
+            class="mt-8 mb-2 w-full"
+        >
+            <div class="mb-5 flex flex-col gap-6">
+                <div class="w-full max-w-sm min-w-[200px]">
+                    <label class="block mb-2 text-sm text-slate-600">
+                        Username
+                    </label>
+                    <input
+                        type="text"
+                        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                        placeholder="Tahun Ajaran"
+                        name="username_input"
+                        value="{{ current_user.username }}"
+                    />
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row justify-end">
+                <button
+                    class="mt-4 w-fit rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="submit"
+                >
+                    Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div
+    class="mb-5 p-5 relative flex flex-col w-full h-fit text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+>
+    <!-- CHANGE PASSWORD FORM -->
+    <div class="w-full relative flex flex-col rounded-xl bg-transparent">
+        <p class="text-slate-500 font-light">Ubah password</p>
+        <form
+            action="{{ url_for('views.handle_profile') }}"
+            method="post"
+            class="mt-8 mb-2 w-full"
+        >
+            <div class="mb-5 flex flex-col gap-6">
+                <div class="w-full max-w-sm min-w-[200px]">
+                    <label class="block mb-2 text-sm text-slate-600">
+                        Password
+                    </label>
+                    <input
+                        type="password"
+                        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                        placeholder="Password"
+                        name="password_input"
+                    />
+                </div>
+            </div>
+
+            <div class="mb-5 flex flex-col gap-6">
+                <div class="w-full max-w-sm min-w-[200px]">
+                    <label class="block mb-2 text-sm text-slate-600">
+                        Konfirmasi Password
+                    </label>
+                    <input
+                        type="password"
+                        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                        placeholder="Password"
+                        name="repassword_input"
+                    />
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row justify-end">
+                <button
+                    class="mt-4 w-fit rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="submit"
+                >
+                    Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div
+    class="mb-5 p-5 relative flex flex-col w-full h-fit text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+>
+    <!-- CHANGE INDENTITAS FORM -->
+    <div class="w-full relative flex flex-col rounded-xl bg-transparent">
+        <p class="text-slate-500 font-light">Ubah identitas</p>
+        <form
+            action="{{ url_for('views.handle_profile') }}"
+            method="post"
+            class="mt-8 mb-2 w-full"
+        >
+            <div class="mb-5 flex flex-col gap-6">
+                <div class="w-full max-w-sm min-w-[200px]">
+                    <label class="block mb-2 text-sm text-slate-600">
+                        Nama Lengkap
+                    </label>
+                    <input
+                        type="text"
+                        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                        placeholder="Nama Lengkap"
+                        name="fullname_input"
+                        value="{{ fullname }}"
+                    />
+                </div>
+            </div>
+
+            <div class="mb-5 flex flex-col gap-6">
+                <div class="w-full max-w-sm min-w-[200px]">
+                    <label class="block mb-2 text-sm text-slate-600">
+                        NIP (Nomor Induk Pegawai)
+                    </label>
+                    <input
+                        type="password"
+                        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                        placeholder="NIP"
+                        name="nip_input"
+                        value="{{ nip }}"
+                    />
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row justify-end">
+                <button
+                    class="mt-4 w-fit rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="submit"
+                >
+                    Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

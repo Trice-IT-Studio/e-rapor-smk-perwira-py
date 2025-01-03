@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="w-full h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Rapor SMK {% block title %}{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='dist/css/out.css') }}"
+    />
+    <!-- FA ICONS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='font_awesome/css/all.min.css') }}"
+    />
+
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black !important;
+      }
+    </style>
+  </head>
+
+  <body class="w-full h-full">
+    {% block content %}{% endblock %}
+
+    <!-- MATERIAL TAILWIND -->
+    <script src="{{ url_for('static', filename='material_tailwind/scripts/ripple.js') }}"></script>
+    <script src="{{ url_for('static', filename='material_tailwind/scripts/collapse.js') }}"></script>
+    <script src="{{ url_for('static', filename='material_tailwind/scripts/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='material_tailwind/scripts/dismissible.js') }}"></script>
+    <script src="{{ url_for('static', filename='material_tailwind/scripts/tabs.js') }}"></script>
+  </body>
+</html>
