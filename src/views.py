@@ -1746,6 +1746,52 @@ def handle_nilai_akhir():
     )
 
 
+# EXCEL HANDLERS ###
+# TODO finish excel handler, create a cetak nilai page view
+@login_required
+@views.route(
+    "/print/<int:th_id>/<int:sm_id>/<int:siswa_id>/<int:kelas_id>/<int:tipe_nilai>",
+    methods=["GET"],
+)
+def excel_handlers(th_id, sm_id, siswa_id, kelas_id, tipe_nilai):
+    # data query
+    th = models.TahunAjaran.query.get(th_id)
+    sm = models.Semester.query.get(sm_id)
+    siswa = models.Siswa.query.get(siswa_id)
+    kelas = models.Kelas.query.get(kelas_id)
+    mapel = models.Mapel.query.filter(models.Mapel.kelas_id == kelas.id)
+    kelompok_mapel = models.KelompokMapel.query.all()
+    tipe_nilai = tipe_nilai
+
+    from .modules.utils.export_excel import export_to_excel
+
+    if tipe_nilai == 1:
+        export_to_excel(th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=1)
+        return redirect(url_for("views.nilai_lingkupmateri"))
+    if tipe_nilai == 2:
+        export_to_excel(th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=2)
+        flash(
+            f"Berhasil mencetak laporan tengah semester {siswa.full_name}",
+            category="success",
+        )
+        return redirect(
+            url_for(
+                "views.nilai_tengah",
+                th=th.id,
+                sm=sm.id,
+                mapel_id=mapel.id,
+                kelas_id=kelas.id,
+                tipe=2,
+            )
+        )
+    if tipe_nilai == 3:
+        export_to_excel(th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=3)
+        return redirect(url_for("views.nilai_akhir"))
+
+    flash("Terjadi kesalahan pada proses pencetakan excel", category="error")
+    return redirect(url_for("views.beranda"))
+
+
 # PROFILE HANDLERS #
 @views.route("/profile", methods=["GET"])
 @login_required

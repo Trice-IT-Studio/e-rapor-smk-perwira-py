@@ -138,7 +138,7 @@ Semester {% endblock %} {% block breadcrumbs %}
               {% endif %}
             </td>
             <td class="p-4 w-full flex flex-row justify-center">
-              <div class="text-center min-w-[200px] w-fit">
+              <div class="flex flex-row gap-2 text-center min-w-[200px] w-fit">
                 <!-- INPUT NILAI TENGAH SISWA MODAL BUTTON -->
                 <div class="text-center relative">
                   <button
@@ -405,6 +405,21 @@ Semester {% endblock %} {% block breadcrumbs %}
                   </div>
                 </div>
                 <!-- INPUT NILAI TENGAH SISWA MODAL END -->
+
+                <!-- EXCEL EXPORT BUTTON -->
+                <div class="text-center relative">
+                  <a
+                    href="{{ url_for('views.excel_handlers', th_id=th_obj.id, sm_id=sm_obj.id, siswa_id=siswa.id, kelas_id=kelas.id, tipe_nilai=2) }}"
+                  >
+                    <button
+                      class="rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                      type="button"
+                    >
+                      Cetak Nilai
+                      <i class="pl-3 fa-solid fa-print"></i>
+                    </button>
+                  </a>
+                </div>
               </div>
             </td>
           </tr>
