@@ -11,7 +11,7 @@ DIST_DEST = f"{WORKING_DIR}../../{DIST_FOLDER_NAME}"
 try:
     # development build
     os.system(
-        f'pyinstaller --onefile --add-data "{STATIC_FOLDER}:src/testing_modules" --add-data "{STATIC_FOLDER}:src/modules" --add-data "{STATIC_FOLDER}:src/static" --add-data "{TEMPLATE_FOLDER}:src/templates" main.py --distpath {DIST_DEST}'
+        f'pyinstaller --add-data "{STATIC_FOLDER}:src/testing_modules" --add-data "{STATIC_FOLDER}:src/modules" --add-data "{STATIC_FOLDER}:src/static" --add-data "{TEMPLATE_FOLDER}:src/templates" main.py --distpath {DIST_DEST}'
     )
 except Exception:
     print("Something went wrong.")
