@@ -2,6 +2,8 @@
 E-Rapor SMK Perwira, perangkat lunak untuk membantu manajemen penilaian siswa dan laporan belajar siswa.
 ## Run Locally
 
+Make sure python version ^3.12 is installed on your system, python version older than specified are not tested and not guaranteed to work as intended.
+
 Clone the project
 
 ```bash
