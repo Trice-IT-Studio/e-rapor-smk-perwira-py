@@ -409,7 +409,7 @@ Semester {% endblock %} {% block breadcrumbs %}
                 <!-- EXCEL EXPORT BUTTON -->
                 <div class="text-center relative">
                   <a
-                    href="{{ url_for('views.excel_handlers', th_id=th_obj.id, sm_id=sm_obj.id, siswa_id=siswa.id, kelas_id=kelas.id, tipe_nilai=2) }}"
+                    href="{{ url_for('views.excel_handlers', th_id=th_obj.id, sm_id=sm_obj.id, siswa_id=siswa.id, kelas_id=kelas.id, mapel_id=mapel.id, tipe_nilai=2) }}"
                   >
                     <button
                       class="rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"

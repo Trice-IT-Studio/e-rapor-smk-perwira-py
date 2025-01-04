@@ -19,7 +19,7 @@ try:
             f'--add-data "{TEMPLATE_FOLDER}:src/templates"',
         ]
         os.system(
-            f"pyinstaller --noconfirm --onedir --console {' '.join(add_data)} main.py --distpath {DIST_DEST}"
+            f"pyinstaller --noconfirm --onefile --console {' '.join(add_data)} main.py --distpath {DIST_DEST}"
         )
     elif system() == "Windows":
         add_data = [
@@ -29,7 +29,7 @@ try:
             f'--add-data "{TEMPLATE_FOLDER};src/templates"',
         ]
         os.system(
-            f"pyinstaller --noconfirm --onedir --console {' '.join(add_data)} main.py --distpath {DIST_DEST}"
+            f"pyinstaller --noconfirm --onefile --console {' '.join(add_data)} main.py --distpath {DIST_DEST}"
         )
     else:
         NotImplementedError("OS other than windows and linux are not supported.")

@@ -14,7 +14,7 @@ def App(root_dir):
     app = Flask(__name__, static_folder="./static", template_folder="./templates")
     app.config["SECRET_KEY"] = "secret"
     app.config["DEBUG"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{root_dir}\\instance\\{DB_NAME}"
     db.init_app(app)
 
     # BLUEPRINTS
@@ -71,7 +71,12 @@ def App(root_dir):
 
 def init_db(app, root_dir):
     # GENERATE DB FILE
-    if not os.path.isfile(f"instance/data.db"):
+    if not os.path.isdir(f"{root_dir}/instance"):
+        print(f'INFO: db dir "{root_dir}/instance" not found, creating dir...')
+        os.makedirs(f"{root_dir}/instance")
+        print("INFO: Dir generated.")
+
+    if not os.path.isfile(f"{root_dir}/instance/data.db"):
         print("[!] No DB file found, creating db file...")
         with app.app_context():
             db.create_all()

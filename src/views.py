@@ -1751,10 +1751,10 @@ def handle_nilai_akhir():
 # TODO finish excel handler, create a cetak nilai page view
 @login_required
 @views.route(
-    "/print/<int:th_id>/<int:sm_id>/<int:siswa_id>/<int:kelas_id>/<int:tipe_nilai>",
+    "/print/<int:th_id>/<int:sm_id>/<int:siswa_id>/<int:kelas_id>/<int:mapel_id>/<int:tipe_nilai>",
     methods=["GET"],
 )
-def excel_handlers(th_id, sm_id, siswa_id, kelas_id, tipe_nilai):
+def excel_handlers(th_id, sm_id, siswa_id, kelas_id, mapel_id, tipe_nilai):
     # data query
     th = models.TahunAjaran.query.get(th_id)
     sm = models.Semester.query.get(sm_id)
@@ -1780,7 +1780,7 @@ def excel_handlers(th_id, sm_id, siswa_id, kelas_id, tipe_nilai):
                 "views.nilai_tengah",
                 th=th.id,
                 sm=sm.id,
-                mapel_id=mapel.id,
+                mapel_id=mapel_id,
                 kelas_id=kelas.id,
                 tipe=2,
             )
