@@ -37,10 +37,6 @@ Activate venv on linux
 Install dependencies
 
 ```bash
-  pip install -r requirements.txt
-```
-or
-```bash
   make install
 ```
 
@@ -58,10 +54,6 @@ Run as desktop application
 ## Installation
 
 First make sure all dependencies are installed correctly, then run:
-```bash
-  python build.py
-```
-or
 ```bash
   make build
 ```
