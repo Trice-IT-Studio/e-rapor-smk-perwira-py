@@ -48,7 +48,7 @@ def App(root_dir):
 
     # TEST DUMMY DATA
     try:
-        from .testing_modules.generate_dummy_data import (
+        from .testing_modules.generate_dummy_data import (  # type: ignore
             generate_dummy_mapel,
             generate_dummy_kelas,
             generate_dummy_kelompok_mapel,
