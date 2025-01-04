@@ -8,7 +8,7 @@ app = App(WORKING_DIR)
 if __name__ == "__main__":
     try:
         webview.create_window("E-Rapor SMK Perwira", app, maximized=True)
-        webview.start(gui="qt")
+        webview.start()
     except webview.errors.WebViewException as e:
         print("Error: ", e)
     # app.run() # TODO delete for production
