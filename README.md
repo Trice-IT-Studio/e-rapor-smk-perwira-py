@@ -37,19 +37,25 @@ Activate venv on linux
 Install dependencies
 
 ```bash
-  pip install -r requirements.txt
+  make install
 ```
 
-Start the server
+Run as web server
 
 ```bash
-  python main.py
+  make runweb
+```
+
+Run as desktop application
+
+```bash
+  make rundesk
 ```
 ## Installation
 
 First make sure all dependencies are installed correctly, then run:
 ```bash
-  python build.py
+  make build
 ```
 
 After running the command above, the compiled exe will be located 1 level outside the project file, if your project file are located as follow:
