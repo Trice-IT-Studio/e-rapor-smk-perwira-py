@@ -1,3 +1,11 @@
+# local
+node_modules/
+node_modules/*
+src/testing_modules/
+src/testing_modules/*
+src/data/
+src/data/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

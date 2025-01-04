@@ -18,7 +18,9 @@ try:
             f'--add-data "{STATIC_FOLDER}:src/static"',
             f'--add-data "{TEMPLATE_FOLDER}:src/templates"',
         ]
-        os.system(f"pyinstaller {' '.join(add_data)} main.py --distpath {DIST_DEST}")
+        os.system(
+            f"pyinstaller --noconfirm --onedir --console {' '.join(add_data)} main.py --distpath {DIST_DEST}"
+        )
     elif system() == "Windows":
         add_data = [
             f'--add-data "{STATIC_FOLDER};src/testing_modules"',
@@ -26,7 +28,9 @@ try:
             f'--add-data "{STATIC_FOLDER};src/static"',
             f'--add-data "{TEMPLATE_FOLDER};src/templates"',
         ]
-        os.system(f"pyinstaller {' '.join(add_data)} main.py --distpath {DIST_DEST}")
+        os.system(
+            f"pyinstaller --noconfirm --onedir --console {' '.join(add_data)} main.py --distpath {DIST_DEST}"
+        )
     else:
         NotImplementedError("OS other than windows and linux are not supported.")
 except Exception as e:

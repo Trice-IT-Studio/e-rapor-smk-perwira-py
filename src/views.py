@@ -686,7 +686,8 @@ def handle_bobot_penilaian():
             to_edit_bobot = models.BobotPenilaian.query.filter(
                 models.BobotPenilaian.mapel_id == mapel_id
             ).first()
-            to_edit_bobot.bobot_materi = bobotmateri_input
+            to_edit_bobot.bobot_materi_p = bobotmateri_input_p
+            to_edit_bobot.bobot_materi_k = bobotmateri_input_k
             to_edit_bobot.bobot_tengah = bobottengah_input
             to_edit_bobot.bobot_akhir = bobotakhir_input
             db.session.commit()
@@ -1382,7 +1383,7 @@ def handle_nilai_tengah():
             # TODO calc bobot tengah and bobot materi if bobot akhir not present
             # note: *2 at the end is to be calculated further based on availability of bobot akhir
             try:
-                calc_pure_nst = nat_value * (bobot.bobot_tengah / 100) * 2
+                calc_pure_nst = nat_value * round((bobot.bobot_tengah / 100) * 2)
             except Exception as e:
                 print(
                     "Exception notification: Possible division by zero in handle_nilai_tengah: ",

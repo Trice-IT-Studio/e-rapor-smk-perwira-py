@@ -104,7 +104,7 @@ endblock %} {% block pgtitle %} Beranda {% endblock %} {% block breadcrumbs %}
                     <option value="">---PILIH KELAS---</option>
                     {% for kelas in all_kelas %}
                     <option value="{{kelas.id}}">
-                      {{kelas.name}} - {{kelas.wali_kelas}}
+                      {{kelas.tingkat.value}}-{{kelas.name}} (Wali Kelas: {{kelas.wali_kelas}})
                     </option>
                     {% endfor %}
                   </select>
