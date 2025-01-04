@@ -25,7 +25,7 @@ Create and activate python venv in project directory
 Activate venv on windows
 
 ```bash
-  ./env/Script/activate
+  ./env/Scripts/activate
 ```
 
 Activate venv on linux
