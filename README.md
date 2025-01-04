@@ -47,7 +47,7 @@ Start the server
 ```
 ## Installation
 
-First maker sure all dependencies are installed correctly, then run:
+First make sure all dependencies are installed correctly, then run:
 ```bash
   python build.py
 ```
