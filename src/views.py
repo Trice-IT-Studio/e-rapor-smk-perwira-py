@@ -1383,7 +1383,7 @@ def handle_nilai_tengah():
             # TODO calc bobot tengah and bobot materi if bobot akhir not present
             # note: *2 at the end is to be calculated further based on availability of bobot akhir
             try:
-                calc_pure_nst = nat_value * round((bobot.bobot_tengah / 100) * 2)
+                calc_pure_nst = nat_value * (bobot.bobot_tengah / 100) * 2
             except Exception as e:
                 print(
                     "Exception notification: Possible division by zero in handle_nilai_tengah: ",
