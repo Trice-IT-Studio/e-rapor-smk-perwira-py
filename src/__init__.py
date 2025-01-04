@@ -54,7 +54,6 @@ def App(root_dir):
             generate_dummy_kelompok_mapel,
             generate_dummy_capaiankom,
             generate_dummy_kompetensidas,
-            # generate_dummy_tujuanpemb,
             generate_dummy_siswa,
         )
 
@@ -63,7 +62,6 @@ def App(root_dir):
         generate_dummy_kelompok_mapel(app)
         generate_dummy_capaiankom(app)
         generate_dummy_kompetensidas(app)
-        # generate_dummy_tujuanpemb(app)
         generate_dummy_siswa(app)
     except Exception as e:
         print("INFO: Possible testing modules is missing. ", e)
@@ -72,12 +70,6 @@ def App(root_dir):
 
 
 def init_db(app, root_dir):
-    # # CHECK DB DIR
-    # if not os.path.isdir(f"{root_dir}/src/data"):
-    #     print("[!] Data dir not found, creating data dir...")
-    #     os.makedirs(f"{root_dir}/src/data")
-    #     print("[+] Created data directory.")
-
     # GENERATE DB FILE
     if not os.path.isfile(f"instance/data.db"):
         print("[!] No DB file found, creating db file...")
