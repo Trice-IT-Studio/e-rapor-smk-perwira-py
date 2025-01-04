@@ -14,7 +14,7 @@ def App(root_dir):
     app = Flask(__name__, static_folder="./static", template_folder="./templates")
     app.config["SECRET_KEY"] = "secret"
     app.config["DEBUG"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:////{root_dir}/src/data/{DB_NAME}"
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
     db.init_app(app)
 
     # BLUEPRINTS
@@ -47,36 +47,39 @@ def App(root_dir):
     create_default_tingkat(app)
 
     # TEST DUMMY DATA
-    from .testing_modules.generate_dummy_data import (
-        generate_dummy_mapel,
-        generate_dummy_kelas,
-        generate_dummy_kelompok_mapel,
-        generate_dummy_capaiankom,
-        generate_dummy_kompetensidas,
-        # generate_dummy_tujuanpemb,
-        generate_dummy_siswa,
-    )
+    try:
+        from .testing_modules.generate_dummy_data import (
+            generate_dummy_mapel,
+            generate_dummy_kelas,
+            generate_dummy_kelompok_mapel,
+            generate_dummy_capaiankom,
+            generate_dummy_kompetensidas,
+            # generate_dummy_tujuanpemb,
+            generate_dummy_siswa,
+        )
 
-    generate_dummy_mapel(app)
-    generate_dummy_kelas(app)
-    generate_dummy_kelompok_mapel(app)
-    generate_dummy_capaiankom(app)
-    generate_dummy_kompetensidas(app)
-    # generate_dummy_tujuanpemb(app)
-    generate_dummy_siswa(app)
+        generate_dummy_mapel(app)
+        generate_dummy_kelas(app)
+        generate_dummy_kelompok_mapel(app)
+        generate_dummy_capaiankom(app)
+        generate_dummy_kompetensidas(app)
+        # generate_dummy_tujuanpemb(app)
+        generate_dummy_siswa(app)
+    except Exception as e:
+        print("INFO: Possible testing modules is missing. ", e)
 
     return app
 
 
 def init_db(app, root_dir):
-    # CHECK DB DIR
-    if not os.path.isdir(f"{root_dir}/src/data"):
-        print("[!] Data dir not found, creating data dir...")
-        os.makedirs(f"{root_dir}/src/data")
-        print("[+] Created data directory.")
+    # # CHECK DB DIR
+    # if not os.path.isdir(f"{root_dir}/src/data"):
+    #     print("[!] Data dir not found, creating data dir...")
+    #     os.makedirs(f"{root_dir}/src/data")
+    #     print("[+] Created data directory.")
 
     # GENERATE DB FILE
-    if not os.path.isfile(f"{root_dir}/src/data/data.db"):
+    if not os.path.isfile(f"instance/data.db"):
         print("[!] No DB file found, creating db file...")
         with app.app_context():
             db.create_all()
