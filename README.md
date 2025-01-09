@@ -25,7 +25,7 @@ Create and activate python venv in project directory
 Activate venv on windows
 
 ```bash
-  ./env/Script/activate
+  ./env/Scripts/activate
 ```
 
 Activate venv on linux
@@ -44,6 +44,11 @@ Run as web server
 
 ```bash
   make runweb
+```
+
+Make sure to watch tailwindcss when the server is running to make sure the UI is  updated
+```bash
+  npx tailwindcss -i /src/static/input.css -o /src/static/dist/css/out.css --watch
 ```
 
 Run as desktop application
