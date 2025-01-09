@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash
 from flask_login import LoginManager
 
 import os
+import sys
+import platform
 
 db = SQLAlchemy()
 DB_NAME = "data.db"
@@ -14,7 +16,14 @@ def App(root_dir):
     app = Flask(__name__, static_folder="./static", template_folder="./templates")
     app.config["SECRET_KEY"] = "secret"
     app.config["DEBUG"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{root_dir}\\instance\\{DB_NAME}"
+    if platform.system() == "Windows":
+        app.config["SQLALCHEMY_DATABASE_URI"] = (
+            f"sqlite:///{root_dir}\\instance\\{DB_NAME}"
+        )
+    elif platform.system() == "Linux":
+        app.config["SQLALCHEMY_DATABASE_URI"] = (
+            f"sqlite:////{root_dir}/instance/{DB_NAME}"
+        )
     db.init_app(app)
 
     # BLUEPRINTS

@@ -73,35 +73,45 @@
       <table class="w-full mt-4 text-left table-auto min-w-max">
         <thead>
           <tr>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NO
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NAMA SISWA
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NILAI AKHIR
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NILAI ASESMEN AKHIR
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
@@ -113,75 +123,27 @@
         {% for siswa in kelas.anggota_kelas %}
         <tbody>
           <tr>
-            <td class="p-4">
+            <td class="text-center p-4">
               <div class="w-max">{{loop.index}}</div>
             </td>
-            <td class="p-4">
-              <div class="w-max">{{siswa.full_name}}</div>
-            </td>
+            <td class="text-center p-4">{{siswa.full_name}}</td>
             <!-- nilai akhir -->
-            <td class="p-4 w-fit" style="width: 20rem !important">
-              {% if siswa.nilai_akhir %} {% for na in siswa.nilai_akhir %} {% if
-              na.value and na.mapel_id == mapel.id and na.th_id == th_obj.id and
-              na.sm_id == sm_obj.id %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Akhir Kosong"
-                value="{{na.value}}"
-                disabled
-              />
-              {% endif %} {% if not na.value and na.mapel_id == mapel.id and
-              na.th_id == th_obj.id and na.sm_id == sm_obj.id %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Akhir Kosong"
-                disabled
-              />
-              {% endif %} {% endfor %} {% endif %} {% if not siswa.nilai_akhir
-              %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Akhir Kosong"
-                disabled
-              />
-              {% endif %}
+            <td class="text-center p-4 w-fit" style="width: 20rem !important">
+              {% for na in siswa.nilai_akhir %} {% if na.value and na.mapel_id
+              == mapel.id and na.th_id == th_obj.id and na.sm_id == sm_obj.id %}
+              <p>{{na.value}}</p>
+              {% endif %} {% endfor %}
             </td>
 
             <!-- nilai asesmen akhir -->
-            <td class="p-4 w-fit" style="width: 20rem !important">
-              {% if siswa.nilai_sumatif_akhir %} {% for nsa in
-              siswa.nilai_sumatif_akhir %} {% if nsa.naa_value and nsa.mapel_id
-              == mapel.id and nsa.th_id == th_obj.id and nsa.sm_id == sm_obj.id
-              %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Asesmen Akhir Kosong"
-                value="{{nsa.naa_value}}"
-                disabled
-              />
-              {% endif %} {% if not nsa.naa_value and nsa.mapel_id == mapel.id
-              and nsa.th_id == th_obj.id and nsa.sm_id == sm_obj.id %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Asesmen Akhir Kosong"
-                disabled
-              />
-              {% endif %} {% endfor %} {% endif %} {% if not
-              siswa.nilai_sumatif_akhir %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Asesmen Akhir Kosong"
-                disabled
-              />
-              {% endif %}
+            <td class="text-center p-4 w-fit" style="width: 20rem !important">
+              {% for nsa in siswa.nilai_sumatif_akhir %} {% if nsa.naa_value and
+              nsa.mapel_id == mapel.id and nsa.th_id == th_obj.id and nsa.sm_id
+              == sm_obj.id %}
+              <p>{{nsa.naa_value}}</p>
+              {% endif %} {% endfor %}
             </td>
-            <td class="p-4 w-full flex flex-row justify-center">
+            <td class="text-center p-4 w-full flex flex-row justify-center">
               <div class="text-center min-w-[200px] w-fit">
                 <!-- INPUT NILAI TENGAH SISWA MODAL BUTTON -->
                 <div class="text-center relative">
@@ -274,61 +236,29 @@
                               <tr>
                                 <td class="p-4">
                                   <div class="text-center p-4 w-full">
-                                    {% if siswa.nilai_sumatif_akhir %} {% for
-                                    nsa in siswa.nilai_sumatif_akhir %} {% if
-                                    nsa.naa_value and nsa.mapel_id == mapel.id
-                                    and nsa.th_id == th_obj.id and nsa.sm_id ==
-                                    sm_obj.id %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai Asesmen Akhir"
-                                      name="naa-{{siswa.id}}"
-                                      value="{{nsa.naa_value}}"
-                                    />
-                                    {% endif %} {% if not nsa.naa_value and
-                                    nsa.mapel_id == mapel.id and nsa.th_id ==
-                                    th_obj.id and nsa.sm_id == sm_obj.id %}
+                                    {% for nsa in siswa.nilai_sumatif_akhir %}
+                                    {% if nsa.naa_value and nsa.mapel_id ==
+                                    mapel.id and nsa.th_id == th_obj.id and
+                                    nsa.sm_id == sm_obj.id %}
+                                    <p>
+                                      Nilai Asesmen Akhir: {{nsa.naa_value}}
+                                    </p>
+                                    {% endif %} {% endfor %}
                                     <input
                                       type="text"
                                       class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                       placeholder="Nilai Asesmen Akhir"
                                       name="naa-{{siswa.id}}"
                                     />
-                                    {% endif %} {% endfor %} {% endif %} {% if
-                                    not siswa.nilai_sumatif_akhir %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai Asesmen Akhir"
-                                      name="naa-{{siswa.id}}"
-                                    />
-                                    {% endif %}
                                   </div>
                                 </td>
                                 <td class="p-4">
                                   <div class="text-center p-4 w-full">
-                                    {% if siswa.nilai_tengah %} {% for nt in
-                                    siswa.nilai_tengah %} {% if nt.th_id ==
+                                    {% for nt in siswa.nilai_tengah %} {% if
+                                    nt.mapel_id == mapel.id and nt.th_id ==
                                     th_obj.id and nt.sm_id == sm_obj.id %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai ATS Kosong"
-                                      name="nt-ats-{{siswa.id}}"
-                                      value="{{nt.value}}"
-                                      disabled
-                                    />
-                                    {% endif %} {% endfor %} {% endif %} {% if
-                                    not siswa.nilai_tengah %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai ATS Kosong"
-                                      name="nt-ats-{{siswa.id}}"
-                                      disabled
-                                    />
-                                    {% endif %}
+                                    <p>Nilai Asesmen Tengah: {{nt.value}}</p>
+                                    {% endif %} {% endfor %}
                                   </div>
                                 </td>
                                 {% for ck in lingkup_ck %}

@@ -136,21 +136,27 @@ Lingkup Materi {% endblock %} {% block breadcrumbs %}
         <table class="w-full mt-4 text-left table-auto min-w-max">
           <thead>
             <tr>
-              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <th
+                class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+              >
                 <p
                   class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
                 >
                   NO
                 </p>
               </th>
-              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <th
+                class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+              >
                 <p
                   class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
                 >
                   NAMA SISWA
                 </p>
               </th>
-              <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+              <th
+                class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+              >
                 <p
                   class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
                 >
@@ -162,28 +168,8 @@ Lingkup Materi {% endblock %} {% block breadcrumbs %}
           <tbody>
             {% for siswa in kelas.anggota_kelas %}
             <tr>
-              <td class="p-4">
-                <div class="flex items-center gap-3">
-                  <div class="flex flex-col">
-                    <p
-                      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-                    >
-                      {{loop.index}}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td class="p-4">
-                <div class="flex items-center gap-3">
-                  <div class="flex flex-col">
-                    <p
-                      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-                    >
-                      {{siswa.full_name}}
-                    </p>
-                  </div>
-                </div>
-              </td>
+              <td class="text-center p-4">{{loop.index}}</td>
+              <td class="text-center p-4">{{siswa.full_name}}</td>
               <td>
                 <div class="text-left gap-3 flex-col">
                   {% for kd in lingkup_kd %}

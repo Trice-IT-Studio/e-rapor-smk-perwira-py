@@ -47,9 +47,7 @@ class TahunAjaran(db.Model):
     kd = db.relationship(
         "KompetensiDasar", backref="kd_th", cascade="all, delete", lazy=True
     )
-    bobot = db.relationship(
-        "BobotPenilaian", backref="bobot_th", cascade="all, delete", lazy=True
-    )
+
     nilai_sumatif_lingkup_materi = db.relationship(
         "NilaiSumatifLingkupMateri", backref="nslk_th", cascade="all, delete", lazy=True
     )
@@ -80,9 +78,6 @@ class Semester(db.Model):
     kd = db.relationship(
         "KompetensiDasar", backref="kd_sm", cascade="all, delete", lazy=True
     )
-    bobot = db.relationship(
-        "BobotPenilaian", backref="bobot_sm", cascade="all, delete", lazy=True
-    )
     nilai_sumatif_lingkup_materi = db.relationship(
         "NilaiSumatifLingkupMateri",
         backref="nslk_semester",
@@ -107,7 +102,7 @@ class Tingkat(db.Model):
 # SISWA MODELS AND ITS RELATIONS
 class Kelas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False, unique=True)
+    name = db.Column(db.String(50), nullable=False)
     wali_kelas = db.Column(db.String(50), nullable=True, default="")
     tingkat_id = db.Column(
         db.Integer,
@@ -174,7 +169,7 @@ class Siswa(db.Model):
 # MAPEL MODELS AND ITS RELATIONS
 class KelompokMapel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(100), nullable=False, default="Umum")
     anggota_kelompok = db.relationship("Mapel", backref="kelompok", lazy=True)
 
@@ -235,12 +230,6 @@ class BobotPenilaian(db.Model):
     bobot_akhir = db.Column(db.Integer, nullable=True)
     mapel_id = db.Column(
         db.Integer, db.ForeignKey("mapel.id", ondelete="CASCADE"), nullable=False
-    )
-    th_id = db.Column(
-        db.Integer, db.ForeignKey("tahun_ajaran.id", ondelete="CASCADE"), nullable=False
-    )
-    sm_id = db.Column(
-        db.Integer, db.ForeignKey("semester.id", ondelete="CASCADE"), nullable=False
     )
 
 

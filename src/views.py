@@ -390,6 +390,8 @@ def handle_siswa():
         kelas_id = request.form.get("kelas-id")
 
         if not siswa_id:
+            # TODO delte debug symbol
+            print("no siswa id is triggered")
             chk_siswa = models.Siswa.query.filter(
                 models.Siswa.nisn == nisn_input
             ).first()
@@ -512,13 +514,35 @@ def handle_kelas():
         tingkat_select = request.form.get("tingkat-select")
         kelas_id = request.form.get("kelas-id")
 
+        # comparative data
+        tochk_tingkat = models.Tingkat.query.get(tingkat_select)
+
         if not kelas_id:
+            chk_kelas = models.Kelas.query.filter(
+                models.Kelas.name == kelasname_input,
+                models.Kelas.tingkat_id == tingkat_select,
+            ).first()
+
+            if chk_kelas:
+                flash(
+                    f"Gagal, kelas dengan nama {kelasname_input} pada kesetaraan tingkat {tochk_tingkat.value} sudah ada. Jika ingin menambahkan beberapa kelas yang sama, tambahkan nomor, contoh: TKJ 1",
+                    category="error",
+                )
+                return redirect(url_for("views.data_kelas"))
+
             new_kelas = models.Kelas(name=kelasname_input, wali_kelas=walas_input)
             db.session.add(new_kelas)
             db.session.commit()
             tingkat = models.Tingkat.query.get(int(tingkat_select))
             tingkat.anggota_tingkat.append(new_kelas)
-            db.session.commit()
+            try:
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                flash(
+                    "Gagal, terjadi kesalahan, nama kelas tidak boleh sama pada tingkat kesetaraan yang sama",
+                    category="error",
+                )
             flash(f"Berhasil menambah kelas {new_kelas.name}", category="success")
             return redirect(url_for("views.data_kelas"))
         else:
@@ -544,7 +568,7 @@ def handle_delete_kelas(kelas_id):
         db.session.delete(to_delete_kelas)
         db.session.commit()
         flash(
-            f"Berhasil menghapus kelas {to_delete_kelas.tingkat.value}-{to_delete_kelas.name}",
+            f"Berhasil menghapus kelas {to_delete_kelas.name}",
             category="success",
         )
         return redirect(url_for("views.data_kelas"))
@@ -580,11 +604,30 @@ def handle_kelompok_mapel():
         kelmapel_id = request.form.get("kelmapel-id")
 
         if not kelmapel_id:
+            chk_kelmapel = models.KelompokMapel.query.filter(
+                models.KelompokMapel.name == kelname_input,
+                models.KelompokMapel.category == category_input,
+            ).first()
+            if chk_kelmapel:
+                flash(
+                    f"Gagal, kelompok mapel dengan nama {chk_kelmapel.name} dan kategori {chk_kelmapel.category} sudah ada",
+                    category="error",
+                )
+                return redirect(url_for("views.data_kelompok_mapel"))
+
             new_kelmapel = models.KelompokMapel(
                 name=kelname_input, category=category_input
             )
             db.session.add(new_kelmapel)
-            db.session.commit()
+            try:
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                flash(
+                    "Terjadi kesalahan, pastikan nama dan kategori kelompok berbeda dari yang sudah ada",
+                    category="error",
+                )
+                return redirect(url_for("views.data_kelompok_mapel"))
             flash(
                 f"Berhasil menambah kelompok mapel: {new_kelmapel.name}",
                 category="success",
@@ -594,7 +637,15 @@ def handle_kelompok_mapel():
             if to_edit_kelmapel:
                 to_edit_kelmapel.name = kelname_input
                 to_edit_kelmapel.category = category_input
-                db.session.commit()
+                try:
+                    db.session.commit()
+                except Exception as e:
+                    print(e)
+                    flash(
+                        "Terjadi kesalahan, pastikan nama dan kategori kelompok berbeda dari yang sudah ada",
+                        category="error",
+                    )
+                    return redirect(url_for("views.data_kelompok_mapel"))
                 flash(
                     f"Berhasil mengedit kelompok mapel: {to_edit_kelmapel.name}",
                     category="success",
@@ -662,7 +713,7 @@ def handle_bobot_penilaian():
         bobotakhir_input = request.form.get("bobotakhir-input")
 
         bobot = models.BobotPenilaian.query.filter(
-            models.BobotPenilaian.mapel_id == int(mapel_id)
+            models.BobotPenilaian.mapel_id == int(mapel_id),
         ).first()
 
         if not bobot:
@@ -672,8 +723,6 @@ def handle_bobot_penilaian():
                 bobot_tengah=bobottengah_input,
                 bobot_akhir=bobotakhir_input,
                 mapel_id=mapel_id,
-                th_id=current_th.id,
-                sm_id=current_sm.id,
             )
             db.session.add(new_bobot)
             db.session.commit()
@@ -909,8 +958,6 @@ def handle_lingkupmateri():
         # bobot penilaian readyness check
         bobot = models.BobotPenilaian.query.filter(
             models.BobotPenilaian.mapel_id == mapel.id,
-            models.BobotPenilaian.th_id == th,
-            models.BobotPenilaian.sm_id == sm,
         ).first()
 
         if bobot:
@@ -1212,7 +1259,6 @@ def nilai_tengah(th, sm, mapel_id, kelas_id, tipe):
 @views.route("/handle_nilai_tengah", methods=["POST"])
 def handle_nilai_tengah():
     if request.method == "POST":
-        nt_mapel = request.form.get("nt-mapel")
         th = request.form.get("th")
         sm = request.form.get("sm")
         kelas_id = request.form.get("kelas-id")
@@ -1225,8 +1271,6 @@ def handle_nilai_tengah():
         # pull bobot penilaian for calculation
         bobot = models.BobotPenilaian.query.filter(
             models.BobotPenilaian.mapel_id == mapel_id,
-            models.BobotPenilaian.th_id == th,
-            models.BobotPenilaian.sm_id == sm,
         ).first()
 
         # bobot penilaian readyness check
@@ -1528,8 +1572,6 @@ def handle_nilai_akhir():
         # query bobot penilaian for calculation
         bobot = models.BobotPenilaian.query.filter(
             models.BobotPenilaian.mapel_id == mapel_id,
-            models.BobotPenilaian.th_id == th,
-            models.BobotPenilaian.sm_id == sm,
         ).first()
 
         # bobot penilaian readyness check
@@ -1747,14 +1789,110 @@ def handle_nilai_akhir():
     )
 
 
+# CETAK NILAI ###
+# TODO Continue to upddate
+@login_required
+@views.route("/cetak_nilai1/<int:th_id>/<int:sm_id>", methods=["GET", "POST"])
+def cetak_nilai1(th_id, sm_id):
+    # general data
+    current_th = models.TahunAjaran.query.filter(
+        models.TahunAjaran.selected == True
+    ).first()
+    current_sm = models.Semester.query.filter(models.Semester.selected == True).first()
+
+    # refresh query for th and sm
+    if request.method == "POST":
+        th_select = request.form.get("th-select")
+        sm_select = request.form.get("sm-select")
+
+        print("th select: ", th_select)
+        print("sm select: ", sm_select)
+
+        return redirect(url_for("views.cetak_nilai1", th_id=th_select, sm_id=sm_select))
+
+    # specific data
+    all_kelas = models.Kelas.query.all()
+    all_th = models.TahunAjaran.query.all()
+    all_sm = models.Semester.query.all()
+    th_obj = models.TahunAjaran.query.get(th_id)
+    sm_obj = models.Semester.query.get(sm_id)
+
+    print("th obj value: ", th_obj.value)
+    print("sm obj value: ", sm_obj.value)
+
+    return render_template(
+        "views/cetak_nilai1.html",
+        current_th=current_th,
+        current_sm=current_sm,
+        all_kelas=all_kelas,
+        all_th=all_th,
+        all_sm=all_sm,
+        th_obj=th_obj,
+        sm_obj=sm_obj,
+    )
+
+
+@login_required
+@views.route(
+    "/cetak_nilai2/<int:kelas_id>/<int:th_id>/<int:sm_id>/<int:tipe_nilai>",
+    methods=["GET"],
+)
+def cetak_nilai2(kelas_id, th_id, sm_id, tipe_nilai):
+    # general data
+    current_th = models.TahunAjaran.query.filter(
+        models.TahunAjaran.selected == True
+    ).first()
+    current_sm = models.Semester.query.filter(models.Semester.selected == True).first()
+
+    # specific nilai
+    kelas = models.Kelas.query.get(kelas_id)
+    lingkup_mapel = models.Mapel.query.filter(models.Mapel.kelas_id == kelas.id)
+    lingkup_siswa = models.Siswa.query.filter(models.Siswa.kelas_id == kelas.id)
+    th_obj = models.TahunAjaran.query.get(th_id)
+    sm_obj = models.Semester.query.get(sm_id)
+
+    return render_template(
+        "views/cetak_nilai2.html",
+        current_th=current_th,
+        current_sm=current_sm,
+        kelas=kelas,
+        linkup_mapel=lingkup_mapel,
+        lingkup_siswa=lingkup_siswa,
+        th_obj=th_obj,
+        sm_obj=sm_obj,
+        tipe_nilai=tipe_nilai,
+    )
+
+
+@login_required
+@views.route("/handle_cetak_nilai", methods=["POST"])
+def handle_cetak_nilai():
+    if request.method == "POST":
+        th_id = request.form.get("th-id")
+        sm_id = request.form.get("sm_id")
+        kelas_id = request.form.get("kelas-id")
+        mapel_id = request.form.get("mapel-id")
+        tipe = request.form.get("tipe")
+
+        if tipe == "1":
+            return redirect(url_for("views.cetak_nilai"))
+        if tipe == "2":
+            return redirect(url_for("views.cetak_nilai2", kelas_id=int(kelas_id)))
+        if tipe == "3":
+            pass
+
+    flash("Terjadi kesalahan, silahkan coba lagi", category="error")
+    return redirect(url_for("views.cetak_nilai1"))
+
+
 # EXCEL HANDLERS ###
 # TODO finish excel handler, create a cetak nilai page view
 @login_required
 @views.route(
-    "/print/<int:th_id>/<int:sm_id>/<int:siswa_id>/<int:kelas_id>/<int:mapel_id>/<int:tipe_nilai>",
+    "/print/<int:th_id>/<int:sm_id>/<int:siswa_id>/<int:kelas_id>/<int:tipe_nilai>",
     methods=["GET"],
 )
-def excel_handlers(th_id, sm_id, siswa_id, kelas_id, mapel_id, tipe_nilai):
+def excel_handlers(th_id, sm_id, siswa_id, kelas_id, tipe_nilai):
     # data query
     th = models.TahunAjaran.query.get(th_id)
     sm = models.Semester.query.get(sm_id)
@@ -1764,30 +1902,82 @@ def excel_handlers(th_id, sm_id, siswa_id, kelas_id, mapel_id, tipe_nilai):
     kelompok_mapel = models.KelompokMapel.query.all()
     tipe_nilai = tipe_nilai
 
-    from .modules.utils.export_excel import export_to_excel
+    # TODO delete debug symbol siswa to excel data
+    # for kel_mapel in kelompok_mapel:
+    #     print("Kelompok mapel:", kel_mapel.name, kel_mapel.category)
+    #     for mapel in kel_mapel.anggota_kelompok:
+    #         if mapel.kelas_id == kelas.id:
+    #             print(mapel.name)
+    #             for nt in mapel.nilai_tengah:
+    #                 if nt.siswa_id == siswa.id and th_id == th.id and nt.sm_id == sm.id:
+    #                     print(nt.value)
+    #             for ck in mapel.capaian_kompetensi:
+    #                 if ck.th_id == th.id and ck.sm_id == sm.id:
+    #                     print(ck.desc)
+
+    # TODO delte debug symbol siswa laporan tengah to excel
+    for kel_mapel in kelompok_mapel:
+        print("Kelompok mapel: ", kel_mapel.name, kel_mapel.category)
+        for mapel in kel_mapel.anggota_kelompok:
+            if mapel.kelas_id == kelas.id:
+                print(mapel.name)
+                for nlk in mapel.nilai_lingkup_materi:
+                    if (
+                        nlk.siswa_id == siswa.id
+                        and nlk.th_id == th.id
+                        and nlk.sm_id == sm.id
+                    ):
+                        print(nlk.tipe_nilai, nlk.value)
+
+    from .modules.utils.export_excel import (
+        sumatif_tengah_toexcel,
+        sumatif_akhir_toexcel,
+        laporan_tengah_toexcel,
+    )
 
     if tipe_nilai == 1:
-        export_to_excel(th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=1)
-        return redirect(url_for("views.nilai_lingkupmateri"))
-    if tipe_nilai == 2:
-        export_to_excel(th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=2)
-        flash(
-            f"Berhasil mencetak laporan tengah semester {siswa.full_name}",
-            category="success",
+        laporan_tengah_toexcel(
+            th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=tipe_nilai
         )
+        flash(f"Berhasil mencetak nilai siswa {siswa.full_name}", category="success")
         return redirect(
             url_for(
-                "views.nilai_tengah",
-                th=th.id,
-                sm=sm.id,
-                mapel_id=mapel_id,
+                "views.cetak_nilai2",
                 kelas_id=kelas.id,
-                tipe=2,
+                th_id=th.id,
+                sm_id=sm.id,
+                tipe_nilai=tipe_nilai,
+            )
+        )
+    if tipe_nilai == 2:
+        sumatif_tengah_toexcel(
+            th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=tipe_nilai
+        )
+        flash(f"Berhasil mencetak nilai siswa {siswa.full_name}", category="success")
+        return redirect(
+            url_for(
+                "views.cetak_nilai2",
+                kelas_id=kelas.id,
+                th_id=th.id,
+                sm_id=sm.id,
+                tipe_nilai=tipe_nilai,
             )
         )
     if tipe_nilai == 3:
-        export_to_excel(th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=3)
-        return redirect(url_for("views.nilai_akhir"))
+        print("nilai akhir is about to print !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        sumatif_akhir_toexcel(
+            th, sm, mapel, kelompok_mapel, kelas, siswa, tipe_nilai=tipe_nilai
+        )
+        flash(f"Berhasil mencetak nilai siswa {siswa.full_name}", category="success")
+        return redirect(
+            url_for(
+                "views.cetak_nilai2",
+                kelas_id=kelas.id,
+                th_id=th.id,
+                sm_id=sm.id,
+                tipe_nilai=tipe_nilai,
+            )
+        )
 
     flash("Terjadi kesalahan pada proses pencetakan excel", category="error")
     return redirect(url_for("views.beranda"))
@@ -1895,6 +2085,9 @@ def handle_pengaturan():
                 flash(
                     f"Berhasil menambah tahun ajaran {new_th.value}", category="success"
                 )
+            else:
+                flash(f"Gagal, tahun ajaran {chk_th.value} sudah ada", category="error")
+                return redirect(url_for("views.pengaturan"))
         else:
             if int(th_select) != current_th.id:
                 select_th = models.TahunAjaran.query.get(th_select)
@@ -1906,13 +2099,18 @@ def handle_pengaturan():
                     category="success",
                 )
 
-        if int(new_sm) != current_sm.id:
+        if new_sm and int(new_sm) != current_sm.id:
             current_sm.selected = False
             selected_sm = models.Semester.query.get(int(new_sm))
             selected_sm.selected = True
             flash("Berhasil mengubah semester.", category="success")
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            flash("Gagal, terjadi kesalahana", category="error")
+            return redirect(url_for("views.pengaturan"))
         return redirect(url_for("views.pengaturan"))
     return redirect(url_for("views.pengaturan"))
 

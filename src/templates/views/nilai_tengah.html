@@ -69,28 +69,36 @@ Semester {% endblock %} {% block breadcrumbs %}
       <table class="w-full mt-4 text-left table-auto min-w-max">
         <thead>
           <tr>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NO
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NAMA SISWA
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 NILAI AKHIR TENGAH SEMESTER
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
@@ -102,40 +110,12 @@ Semester {% endblock %} {% block breadcrumbs %}
         {% for siswa in kelas.anggota_kelas %}
         <tbody>
           <tr>
-            <td class="p-4">
-              <div class="w-max">{{loop.index}}</div>
-            </td>
-            <td class="p-4">
-              <div class="w-max">{{siswa.full_name}}</div>
-            </td>
-            <td class="p-4 w-fit" style="width: 20rem !important">
-              {% if siswa.nilai_tengah %} {% for nats in siswa.nilai_tengah %}
-              {% if nats.value and nats.mapel_id == mapel.id and nats.th_id ==
-              th and nats.sm_id == sm %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Akhir Tengah Semester"
-                value="{{nats.value}}"
-                disabled
-              />
-              {% endif %} {% if not nats.value and nats.mapel_id == mapel.id and
-              nats.th_id == th and nats.sm_id == sm %}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Akhir Tengah Semester"
-                disabled
-              />
-              {% endif %} {% endfor %} {% endif %} {% if not
-              siswa.nilai_tengah%}
-              <input
-                type="text"
-                class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                placeholder="Nilai Akhir Tengah Semester"
-                disabled
-              />
-              {% endif %}
+            <td class="text-center p-4">{{loop.index}}</td>
+            <td class="text-center p-4">{{siswa.full_name}}</td>
+            <td class="text-center p-4 w-fit" style="width: 20rem !important">
+              {% for nats in siswa.nilai_tengah %} {% if nats.value and
+              nats.mapel_id == mapel.id and nats.th_id == th and nats.sm_id ==
+              sm %} {{nats.value}} {% endif %} {% endfor %}
             </td>
             <td class="p-4 w-full flex flex-row justify-center">
               <div class="flex flex-row gap-2 text-center min-w-[200px] w-fit">
@@ -218,35 +198,22 @@ Semester {% endblock %} {% block breadcrumbs %}
                               <tr>
                                 <td class="p-4">
                                   <div class="text-center p-4 w-full">
-                                    {% if siswa.nilai_sumatif_tengah %} {% for
-                                    nats in siswa.nilai_sumatif_tengah %} {% if
-                                    nats.value and nats.mapel_id == mapel.id and
-                                    nats.th_id == th and nats.sm_id == sm %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai Asesmen Tengah"
-                                      name="nat-{{siswa.id}}"
-                                      value="{{nats.nat_value}}"
-                                    />
-                                    {% endif %} {% if not nats.value and
-                                    nats.mapel_id == mapel.id and nats.th_id ==
-                                    th and nats.sm_id == sm %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai Asesmen Tengah"
-                                      name="nat-{{siswa.id}}"
-                                    />
-                                    {% endif %} {% endfor %} {% endif %} {% if
-                                    not siswa.nilai_sumatif_tengah %}
-                                    <input
-                                      type="text"
-                                      class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                      placeholder="Nilai Asesmen Tengah"
-                                      name="nat-{{siswa.id}}"
-                                    />
-                                    {% endif %}
+                                    <div
+                                      class="flex flex-col w-full justify-center items-center gap-2"
+                                    >
+                                      {% for nats in siswa.nilai_sumatif_tengah
+                                      %} {% if nats.value and nats.mapel_id ==
+                                      mapel.id and nats.th_id == th and
+                                      nats.sm_id == sm %}
+                                      <p>Nilai: {{nats.nat_value}}</p>
+                                      {% endif %} {% endfor %}
+                                      <input
+                                        type="text"
+                                        class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                        placeholder="Ubah/Isi Nilai Asesmen Tengah"
+                                        name="nat-{{siswa.id}}"
+                                      />
+                                    </div>
                                   </div>
                                 </td>
                                 {% for ck in lingkup_ck %}
@@ -405,21 +372,6 @@ Semester {% endblock %} {% block breadcrumbs %}
                   </div>
                 </div>
                 <!-- INPUT NILAI TENGAH SISWA MODAL END -->
-
-                <!-- EXCEL EXPORT BUTTON -->
-                <div class="text-center relative">
-                  <a
-                    href="{{ url_for('views.excel_handlers', th_id=th_obj.id, sm_id=sm_obj.id, siswa_id=siswa.id, kelas_id=kelas.id, mapel_id=mapel.id, tipe_nilai=2) }}"
-                  >
-                    <button
-                      class="rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
-                      type="button"
-                    >
-                      Cetak Nilai
-                      <i class="pl-3 fa-solid fa-print"></i>
-                    </button>
-                  </a>
-                </div>
               </div>
             </td>
           </tr>

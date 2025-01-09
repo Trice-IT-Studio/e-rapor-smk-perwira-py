@@ -85,28 +85,36 @@ endblock %} {% block breadcrumbs %}
       <table class="w-full mt-4 text-left table-auto min-w-max">
         <thead>
           <tr>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 MATA PELAJARAN
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 KELOMPOK MAPEL
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
                 KELAS
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
@@ -122,7 +130,9 @@ endblock %} {% block breadcrumbs %}
                 JML PESERTA DIDIK
               </p>
             </th>
-            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+            <th
+              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
+            >
               <p
                 class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
@@ -134,52 +144,14 @@ endblock %} {% block breadcrumbs %}
         <tbody>
           {% for mapel in mapel_perkelas %}
           <tr>
-            <td class="p-4">
-              <div class="flex items-center gap-3">
-                <div class="flex flex-col">
-                  <p
-                    class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-                  >
-                    {{mapel.name}}
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td class="p-4">
-              <div class="flex flex-col">
-                <p
-                  class="text-center block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-                >
-                  {{mapel.kelompok.name}}
-                </p>
-              </div>
-            </td>
-            <td class="p-4">
-              <div class="flex flex-col">
-                <p
-                  class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-                >
-                  {{mapel.kelas.name}}
-                </p>
-              </div>
-            </td>
-            <td class="p-4">
-              <div class="w-max">
-                <p
-                  class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-                >
-                  {{mapel.kelas.wali_kelas}}
-                </p>
-              </div>
-            </td>
+            <td class="text-center p-4">{{mapel.name}}</td>
+            <td class="text-center p-4">{{mapel.kelompok.name}}</td>
+            <td class="text-center p-4">{{mapel.kelas.name}}</td>
+            <td class="text-center p-4">{{mapel.kelas.wali_kelas}}</td>
             <td class="text-center p-4">
-              <p
-                class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
-              >
-                {{mapel.kelas.anggota_kelas | length}}
-              </p>
+              {{mapel.kelas.anggota_kelas | length}}
             </td>
-            <td class="text-right p-4 flex flex-col">
+            <td class="text-center p-4 flex flex-col">
               <a
                 href="{{ url_for('views.nilai_start3', mapel_id=mapel.id, kelas_id=kelas.id, tipe=1) }}"
                 class="my-2 rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"

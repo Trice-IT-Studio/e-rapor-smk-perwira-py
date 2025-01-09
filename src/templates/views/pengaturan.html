@@ -126,7 +126,7 @@ endblock %} {% block breadcrumbs %}
           Buat Tahun Ajaran Baru
         </div>
         <hr />
-        <form action="" method="post">
+        <form action="{{ url_for('views.handle_pengaturan') }}" method="post">
           <!-- Tahun ajaran Input -->
           <div class="pt-5 w-full min-w-[200px]">
             <label class="block mb-2 text-sm text-slate-600">

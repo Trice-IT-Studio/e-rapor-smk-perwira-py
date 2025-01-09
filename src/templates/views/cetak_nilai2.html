@@ -1,5 +1,7 @@
-{% extends 'views/base_dashboard.html' %} {% block pgtitle %} Input Nilai {%
-endblock %} {% block breadcrumbs %}
+{% extends 'views/base_dashboard.html' %} {% block pgtitle %} {% if tipe_nilai
+== 1 %} Cetak Nilai Laporan Tengah Semester {% elif tipe_nilai == 2 %} Cetak
+Nilai Sumatif Tengah Semester {% elif tipe_nilai == 3 %} Cetak Nilai Akhir
+Semester {% endif %} {% endblock %} {% block breadcrumbs %}
 <!-- BREADCRUMBS -->
 <li
   class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
@@ -10,13 +12,19 @@ endblock %} {% block breadcrumbs %}
 <li
   class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
 >
-  <a href="#">input nilai</a>
+  <a href="#">cetak nilai</a>
   <span class="pointer-events-none mx-2 text-slate-800"> / </span>
 </li>
 <li
   class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
 >
   <a href="#">pilih kelas</a>
+  <span class="pointer-events-none mx-2 text-slate-800"> / </span>
+</li>
+<li
+  class="flex cursor-pointer items-center text-sm text-slate-500 transition-colors duration-300 hover:text-slate-800"
+>
+  <a href="#">pilih siswa</a>
   <span class="pointer-events-none mx-2 text-slate-800"> / </span>
 </li>
 <!-- BREADCRUMBS END -->
@@ -35,7 +43,7 @@ endblock %} {% block breadcrumbs %}
           <h5
             class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900"
           >
-            Pilih kelas yang ingin di nilai
+            Tahun Ajaran {{th_obj.value}} {{sm_obj.value}}
           </h5>
         </div>
       </div>
@@ -83,14 +91,14 @@ endblock %} {% block breadcrumbs %}
               <p
                 class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
-                NAMA KELAS
+                NAMA SISWA
               </p>
             </th>
             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
               <p
                 class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
-                TINGKAT KELAS
+                NISN
               </p>
             </th>
             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
@@ -104,63 +112,90 @@ endblock %} {% block breadcrumbs %}
               <p
                 class="text-center block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
               >
-                JML SISWA
-              </p>
-            </th>
-            <th
-              class="text-center p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
-            >
-              <p
-                class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
-              >
                 AKSI
               </p>
             </th>
           </tr>
         </thead>
         <tbody>
-          {% for kelas in all_kelas %}
+          {% for siswa in lingkup_siswa %}
           <tr>
-            <td class="text-center p-4 max-w-80">{{kelas.name}}</td>
-            <td class="text-center p-4 max-w-80">{{kelas.tingkat.value}}</td>
-            <td class="text-center p-4 max-w-80">{{kelas.wali_kelas}}</td>
-            <td class="text-center p-4 max-w-80">
-              {{kelas.anggota_kelas | length}}
+            <td class="p-4 max-w-80">
+              <div class="flex justify-center items-center gap-3">
+                <div class="flex flex-col">
+                  <p
+                    class="text-center block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                  >
+                    {{siswa.full_name}}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="p-4 max-w-80">
+              <div class="flex justify-center items-center gap-3">
+                <div class="flex flex-col">
+                  <p
+                    class="text-center block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                  >
+                    {{siswa.nisn}}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="p-4 max-w-80">
+              <div class="flex justify-center items-center gap-3">
+                <div class="flex flex-col">
+                  <p
+                    class="text-center block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                  >
+                    {{siswa.kelas_belajar.wali_kelas}}
+                  </p>
+                </div>
+              </div>
             </td>
 
-            <td class="text-center p-4">
-              <a
-                href="{{ url_for('views.nilai_start2', kelas_id=kelas.id) }}"
-                class="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
-                type="submit"
-              >
-                Selanjutnya
-                <i class="pl-1 fa-solid fa-arrow-right"></i>
-              </a>
-              <!-- <form
-                action="{{ url_for('views.handle_nilai_start') }}"
-                method="post"
-              >
-                <input type="text" class="hidden" name="to-page" value="2" />
-                <input
-                  type="number"
-                  class="hidden"
-                  name="kelas-id"
-                  value="{{kelas.id}}"
-                />
-                <button
-                  class="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
-                  type="submit"
+            <td>
+              <!-- EXCEL EXPORT BUTTON -->
+              <div class="text-center relative">
+                <a
+                  href="{{ url_for('views.excel_handlers', th_id=th_obj.id, sm_id=sm_obj.id, siswa_id=siswa.id, kelas_id=kelas.id, tipe_nilai=tipe_nilai) }}"
                 >
-                  Selanjutnya
-                  <i class="pl-1 fa-solid fa-arrow-right"></i>
-                </button>
-              </form> -->
+                  <button
+                    class="rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                    type="button"
+                  >
+                    Cetak Nilai
+                    <i class="pl-3 fa-solid fa-print"></i>
+                  </button>
+                </a>
+              </div>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
+    </div>
+  </div>
+  <div
+    class="flex items-center justify-between p-4 border-t border-blue-gray-50"
+  >
+    <a
+      href="{{ url_for('views.cetak_nilai1', th_id=th_obj.id, sm_id=sm_obj.id) }}"
+    >
+      <button
+        class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+      >
+        <i class="mr-1 fa-solid fa-arrow-left"></i>
+        Kembali
+      </button></a
+    >
+    <p
+      class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+    ></p>
+    <div class="flex gap-2">
+      <button class="bg-transparent" type="button"></button>
+      <button class="bg-transparent" type="button"></button>
     </div>
   </div>
 </div>
